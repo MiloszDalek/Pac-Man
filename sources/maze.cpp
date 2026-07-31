@@ -2,7 +2,7 @@
 
 Maze::Maze(QGraphicsPixmapItem* parent) : QObject(), QGraphicsPixmapItem(parent)
 {
-	setPixmap(QPixmap("Images/maze.png").scaled(MAP_WIDTH, MAP_HEIGHT));
+	setPixmap(QPixmap(":/Images/maze.png").scaled(MAP_WIDTH, MAP_HEIGHT));
 	animationTimer = new QTimer(this);
 	color = 0;
 
@@ -12,11 +12,11 @@ Maze::Maze(QGraphicsPixmapItem* parent) : QObject(), QGraphicsPixmapItem(parent)
 void Maze::changeColor()
 {
 	if (color) {
-		setPixmap(QPixmap("Images/maze.png").scaled(MAP_WIDTH, MAP_HEIGHT));
+		setPixmap(QPixmap(":/Images/maze.png").scaled(MAP_WIDTH, MAP_HEIGHT));
 		color--;
 	}
 	else {
-		setPixmap(QPixmap("Images/white_maze.png").scaled(MAP_WIDTH, MAP_HEIGHT));
+		setPixmap(QPixmap(":/Images/white_maze.png").scaled(MAP_WIDTH, MAP_HEIGHT));
 		color++;
 	}
 	if (!intervals.isEmpty())

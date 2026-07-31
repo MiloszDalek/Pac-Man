@@ -2,7 +2,7 @@
 
 Blinky::Blinky(QGraphicsItem* parent) : Ghost(parent)
 {
-	setPixmap(QPixmap("Images/sprites/Blinky/LEFT_2.png").scaled(Px, Py));
+	setPixmap(QPixmap(":/Images/sprites/Blinky/LEFT_2.png").scaled(Px, Py));
 	setPos(InitialBlinkyPosX, InitialBlinkyPosY);
 	currentDirection = 'L';
 	fillAnimationList();
@@ -20,7 +20,7 @@ void Blinky::blinkyPosUpdate()
 
 void Blinky::setDefault()
 {
-	setPixmap(QPixmap("Images/sprites/Blinky/LEFT_2.png").scaled(Px, Py));
+	setPixmap(QPixmap(":/Images/sprites/Blinky/LEFT_2.png").scaled(Px, Py));
 	setPos(InitialBlinkyPosX, InitialBlinkyPosY);
 	currentDirection = 'L';
 	nextRow = ROW_ABOVE_BOX;
@@ -41,20 +41,20 @@ void Blinky::setDefault()
 void Blinky::fillAnimationList()
 {	
 	QList<QPixmap> listUp;
-	listUp << QPixmap("Images/sprites/Blinky/UP_1.png").scaled(Px, Py);
-	listUp << QPixmap("Images/sprites/Blinky/UP_2.png").scaled(Px, Py);
+	listUp << QPixmap(":/Images/sprites/Blinky/UP_1.png").scaled(Px, Py);
+	listUp << QPixmap(":/Images/sprites/Blinky/UP_2.png").scaled(Px, Py);
 	
 	QList<QPixmap> listDown;
-	listDown << QPixmap("Images/sprites/Blinky/DOWN_1.png").scaled(Px, Py);
-	listDown << QPixmap("Images/sprites/Blinky/DOWN_2.png").scaled(Px, Py);
+	listDown << QPixmap(":/Images/sprites/Blinky/DOWN_1.png").scaled(Px, Py);
+	listDown << QPixmap(":/Images/sprites/Blinky/DOWN_2.png").scaled(Px, Py);
 	
 	QList<QPixmap> listLeft;
-	listLeft << QPixmap("Images/sprites/Blinky/LEFT_1.png").scaled(Px, Py);
-	listLeft << QPixmap("Images/sprites/Blinky/LEFT_2.png").scaled(Px, Py);
+	listLeft << QPixmap(":/Images/sprites/Blinky/LEFT_1.png").scaled(Px, Py);
+	listLeft << QPixmap(":/Images/sprites/Blinky/LEFT_2.png").scaled(Px, Py);
 	
 	QList<QPixmap> listRight;
-	listRight << QPixmap("Images/sprites/Blinky/RIGHT_1.png").scaled(Px, Py);
-	listRight << QPixmap("Images/sprites/Blinky/RIGHT_2.png").scaled(Px, Py);
+	listRight << QPixmap(":/Images/sprites/Blinky/RIGHT_1.png").scaled(Px, Py);
+	listRight << QPixmap(":/Images/sprites/Blinky/RIGHT_2.png").scaled(Px, Py);
 	
 	animationList << listUp << listDown << listLeft << listRight;
 }

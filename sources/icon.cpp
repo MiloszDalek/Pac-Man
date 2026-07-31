@@ -142,33 +142,33 @@ void Icon::despawn()
 
 void Icon::fillBluePointsList()
 {
-	bluePointsList << QPixmap("Images/sprites/Points/Icon_200.png").scaled(Px, Py);
-	bluePointsList << QPixmap("Images/sprites/Points/Icon_400.png").scaled(Px, Py);
-	bluePointsList << QPixmap("Images/sprites/Points/Icon_800.png").scaled(Px, Py);
-	bluePointsList << QPixmap("Images/sprites/Points/Icon_1600.png").scaled(Px, Py);
+	bluePointsList << QPixmap(":/Images/sprites/Points/Icon_200.png").scaled(Px, Py);
+	bluePointsList << QPixmap(":/Images/sprites/Points/Icon_400.png").scaled(Px, Py);
+	bluePointsList << QPixmap(":/Images/sprites/Points/Icon_800.png").scaled(Px, Py);
+	bluePointsList << QPixmap(":/Images/sprites/Points/Icon_1600.png").scaled(Px, Py);
 }
 
 void Icon::fillIconList()
 {
-	iconList << QPixmap("Images/sprites/PacMan/LEFT_2.png").scaled(Px, Py);
-	iconList << QPixmap("Images/sprites/Icons/CHERRY.png").scaled(Px, Py);
-	iconList << QPixmap("Images/sprites/Icons/STRAWBERRY.png").scaled(Px, Py);
-	iconList << QPixmap("Images/sprites/Icons/PEACH.png").scaled(Px, Py);	
-	iconList << QPixmap("Images/sprites/Icons/APPLE.png").scaled(Px, Py);
-	iconList << QPixmap("Images/sprites/Icons/GRAPES.png").scaled(Px, Py);
-	iconList << QPixmap("Images/sprites/Icons/GALAXIAN.png").scaled(Px, Py);
-	iconList << QPixmap("Images/sprites/Icons/BELL.png").scaled(Px, Py);
-	iconList << QPixmap("Images/sprites/Icons/KEY.png").scaled(Px, Py);
+	iconList << QPixmap(":/Images/sprites/PacMan/LEFT_2.png").scaled(Px, Py);
+	iconList << QPixmap(":/Images/sprites/Icons/CHERRY.png").scaled(Px, Py);
+	iconList << QPixmap(":/Images/sprites/Icons/STRAWBERRY.png").scaled(Px, Py);
+	iconList << QPixmap(":/Images/sprites/Icons/PEACH.png").scaled(Px, Py);	
+	iconList << QPixmap(":/Images/sprites/Icons/APPLE.png").scaled(Px, Py);
+	iconList << QPixmap(":/Images/sprites/Icons/GRAPES.png").scaled(Px, Py);
+	iconList << QPixmap(":/Images/sprites/Icons/GALAXIAN.png").scaled(Px, Py);
+	iconList << QPixmap(":/Images/sprites/Icons/BELL.png").scaled(Px, Py);
+	iconList << QPixmap(":/Images/sprites/Icons/KEY.png").scaled(Px, Py);
 }
 
 void Icon::fillPinkPointsList()
 {
-	pinkPointsList << QPixmap("Images/sprites/Icons/PINK_100.png").scaled(Px, Py);
-	pinkPointsList << QPixmap("Images/sprites/Icons/PINK_300.png").scaled(Px, Py);
-	pinkPointsList << QPixmap("Images/sprites/Icons/PINK_500.png").scaled(Px, Py);
-	pinkPointsList << QPixmap("Images/sprites/Icons/PINK_700.png").scaled(Px, Py);
-	pinkPointsList << QPixmap("Images/sprites/Icons/PINK_1000.png").scaled(Px, Py);
-	pinkPointsList << QPixmap("Images/sprites/Icons/PINK_2000.png").scaled(Px, Py);
-	pinkPointsList << QPixmap("Images/sprites/Icons/PINK_3000.png").scaled(Px, Py);
-	pinkPointsList << QPixmap("Images/sprites/Icons/PINK_5000.png").scaled(Px, Py);
+	pinkPointsList << QPixmap(":/Images/sprites/Icons/PINK_100.png").scaled(Px, Py);
+	pinkPointsList << QPixmap(":/Images/sprites/Icons/PINK_300.png").scaled(Px, Py);
+	pinkPointsList << QPixmap(":/Images/sprites/Icons/PINK_500.png").scaled(Px, Py);
+	pinkPointsList << QPixmap(":/Images/sprites/Icons/PINK_700.png").scaled(Px, Py);
+	pinkPointsList << QPixmap(":/Images/sprites/Icons/PINK_1000.png").scaled(Px, Py);
+	pinkPointsList << QPixmap(":/Images/sprites/Icons/PINK_2000.png").scaled(Px, Py);
+	pinkPointsList << QPixmap(":/Images/sprites/Icons/PINK_3000.png").scaled(Px, Py);
+	pinkPointsList << QPixmap(":/Images/sprites/Icons/PINK_5000.png").scaled(Px, Py);
 }

@@ -4,7 +4,7 @@
 
 Player::Player(QGraphicsItem* parent) : Entity(parent)
 {
-	setPixmap(QPixmap("Images/sprites/PacMan/1.png").scaled(Px, Py));
+	setPixmap(QPixmap(":/Images/sprites/PacMan/1.png").scaled(Px, Py));
 	setPos(InitialPlayerPosX, InitialPlayerPosY);
 	
 	moveTimer = new QTimer(this);
@@ -31,7 +31,7 @@ Player::Player(QGraphicsItem* parent) : Entity(parent)
 
 void Player::setDefault()
 {
-	setPixmap(QPixmap("Images/sprites/PacMan/1.png").scaled(Px, Py));
+	setPixmap(QPixmap(":/Images/sprites/PacMan/1.png").scaled(Px, Py));
 	setPos(InitialPlayerPosX, InitialPlayerPosY);
 	currentDirection = 0;
 	buffDirection = 0;
@@ -233,51 +233,51 @@ void Player::stop()
 	corectionTimer->stop();
 	inMove = false;
 	alive = false;
-	setPixmap(QPixmap("Images/sprites/PacMan/1.png").scaled(Px, Py));
+	setPixmap(QPixmap(":/Images/sprites/PacMan/1.png").scaled(Px, Py));
 }
 
 void Player::fillAnimationList()
 {
 	QList<QPixmap> listUp;
-	listUp << QPixmap("Images/sprites/PacMan/1.png").scaled(Px, Py);
-	listUp << QPixmap("Images/sprites/PacMan/UP_2.png").scaled(Px, Py);
-	listUp << QPixmap("Images/sprites/PacMan/UP_3.png").scaled(Px, Py);
-	listUp << QPixmap("Images/sprites/PacMan/UP_2.png").scaled(Px, Py);
+	listUp << QPixmap(":/Images/sprites/PacMan/1.png").scaled(Px, Py);
+	listUp << QPixmap(":/Images/sprites/PacMan/UP_2.png").scaled(Px, Py);
+	listUp << QPixmap(":/Images/sprites/PacMan/UP_3.png").scaled(Px, Py);
+	listUp << QPixmap(":/Images/sprites/PacMan/UP_2.png").scaled(Px, Py);
 
 	QList<QPixmap> listDown;
-	listDown << QPixmap("Images/sprites/PacMan/1.png").scaled(Px, Py);
-	listDown << QPixmap("Images/sprites/PacMan/DOWN_2.png").scaled(Px, Py);
-	listDown << QPixmap("Images/sprites/PacMan/DOWN_3.png").scaled(Px, Py);
-	listDown << QPixmap("Images/sprites/PacMan/DOWN_2.png").scaled(Px, Py);
+	listDown << QPixmap(":/Images/sprites/PacMan/1.png").scaled(Px, Py);
+	listDown << QPixmap(":/Images/sprites/PacMan/DOWN_2.png").scaled(Px, Py);
+	listDown << QPixmap(":/Images/sprites/PacMan/DOWN_3.png").scaled(Px, Py);
+	listDown << QPixmap(":/Images/sprites/PacMan/DOWN_2.png").scaled(Px, Py);
 
 	QList<QPixmap> listLeft;
-	listLeft << QPixmap("Images/sprites/PacMan/1.png").scaled(Px, Py);
-	listLeft << QPixmap("Images/sprites/PacMan/LEFT_2.png").scaled(Px, Py);
-	listLeft << QPixmap("Images/sprites/PacMan/LEFT_3.png").scaled(Px, Py);
-	listLeft << QPixmap("Images/sprites/PacMan/LEFT_2.png").scaled(Px, Py);
+	listLeft << QPixmap(":/Images/sprites/PacMan/1.png").scaled(Px, Py);
+	listLeft << QPixmap(":/Images/sprites/PacMan/LEFT_2.png").scaled(Px, Py);
+	listLeft << QPixmap(":/Images/sprites/PacMan/LEFT_3.png").scaled(Px, Py);
+	listLeft << QPixmap(":/Images/sprites/PacMan/LEFT_2.png").scaled(Px, Py);
 
 	QList<QPixmap> listRight;
-	listRight << QPixmap("Images/sprites/PacMan/1.png").scaled(Px, Py);
-	listRight << QPixmap("Images/sprites/PacMan/RIGHT_2.png").scaled(Px, Py);
-	listRight << QPixmap("Images/sprites/PacMan/RIGHT_3.png").scaled(Px, Py);
-	listRight << QPixmap("Images/sprites/PacMan/RIGHT_2.png").scaled(Px, Py);
+	listRight << QPixmap(":/Images/sprites/PacMan/1.png").scaled(Px, Py);
+	listRight << QPixmap(":/Images/sprites/PacMan/RIGHT_2.png").scaled(Px, Py);
+	listRight << QPixmap(":/Images/sprites/PacMan/RIGHT_3.png").scaled(Px, Py);
+	listRight << QPixmap(":/Images/sprites/PacMan/RIGHT_2.png").scaled(Px, Py);
 
 	animationList << listUp << listDown << listLeft << listRight;
 }
 
 void Player::fillDeathAnimationList()
 {
-//	deathAnimation << QPixmap("Images/sprites/PacMan/1.png").scaled(Px, Py);
-	deathAnimation << QPixmap("Images/sprites/PacMan/UP_2.png").scaled(Px, Py);
-	deathAnimation << QPixmap("Images/sprites/PacMan/death/1.png").scaled(Px, Py);
-	deathAnimation << QPixmap("Images/sprites/PacMan/death/2.png").scaled(Px, Py);
-	deathAnimation << QPixmap("Images/sprites/PacMan/death/3.png").scaled(Px, Py);
-	deathAnimation << QPixmap("Images/sprites/PacMan/death/4.png").scaled(Px, Py);
-	deathAnimation << QPixmap("Images/sprites/PacMan/death/5.png").scaled(Px, Py);
-	deathAnimation << QPixmap("Images/sprites/PacMan/death/6.png").scaled(Px, Py);
-	deathAnimation << QPixmap("Images/sprites/PacMan/death/7.png").scaled(Px, Py);
-	deathAnimation << QPixmap("Images/sprites/PacMan/death/8.png").scaled(Px, Py);
-	deathAnimation << QPixmap("Images/sprites/PacMan/death/9.png").scaled(Px, Py);
-	deathAnimation << QPixmap("Images/sprites/PacMan/death/10.png").scaled(Px, Py);
-	deathAnimation << QPixmap("Images/sprites/PacMan/death/11.png").scaled(Px, Py);
+//	deathAnimation << QPixmap(":/Images/sprites/PacMan/1.png").scaled(Px, Py);
+	deathAnimation << QPixmap(":/Images/sprites/PacMan/UP_2.png").scaled(Px, Py);
+	deathAnimation << QPixmap(":/Images/sprites/PacMan/death/1.png").scaled(Px, Py);
+	deathAnimation << QPixmap(":/Images/sprites/PacMan/death/2.png").scaled(Px, Py);
+	deathAnimation << QPixmap(":/Images/sprites/PacMan/death/3.png").scaled(Px, Py);
+	deathAnimation << QPixmap(":/Images/sprites/PacMan/death/4.png").scaled(Px, Py);
+	deathAnimation << QPixmap(":/Images/sprites/PacMan/death/5.png").scaled(Px, Py);
+	deathAnimation << QPixmap(":/Images/sprites/PacMan/death/6.png").scaled(Px, Py);
+	deathAnimation << QPixmap(":/Images/sprites/PacMan/death/7.png").scaled(Px, Py);
+	deathAnimation << QPixmap(":/Images/sprites/PacMan/death/8.png").scaled(Px, Py);
+	deathAnimation << QPixmap(":/Images/sprites/PacMan/death/9.png").scaled(Px, Py);
+	deathAnimation << QPixmap(":/Images/sprites/PacMan/death/10.png").scaled(Px, Py);
+	deathAnimation << QPixmap(":/Images/sprites/PacMan/death/11.png").scaled(Px, Py);
 }

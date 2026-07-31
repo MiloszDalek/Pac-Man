@@ -4,7 +4,7 @@
 
 Clyde::Clyde(QGraphicsItem* parent) : Ghost(parent)
 {
-	setPixmap(QPixmap("Images/sprites/Clyde/DOWN_2.png").scaled(Px, Py));
+	setPixmap(QPixmap(":/Images/sprites/Clyde/DOWN_2.png").scaled(Px, Py));
 	setPos(InitialClydePosX, InitialClydePosY);
 	currentDirection = 'D';
 	fillAnimationList();
@@ -15,7 +15,7 @@ Clyde::Clyde(QGraphicsItem* parent) : Ghost(parent)
 
 void Clyde::setDefault()
 {
-	setPixmap(QPixmap("Images/sprites/Clyde/DOWN_2.png").scaled(Px, Py));
+	setPixmap(QPixmap(":/Images/sprites/Clyde/DOWN_2.png").scaled(Px, Py));
 	setPos(InitialClydePosX, InitialClydePosY);
 	currentDirection = 'D';
 	nextRow = ROW_ABOVE_BOX;
@@ -36,20 +36,20 @@ void Clyde::setDefault()
 void Clyde::fillAnimationList()
 {	
 	QList<QPixmap> listUp;
-	listUp << QPixmap("Images/sprites/Clyde/UP_1.png").scaled(Px, Py);
-	listUp << QPixmap("Images/sprites/Clyde/UP_2.png").scaled(Px, Py);
+	listUp << QPixmap(":/Images/sprites/Clyde/UP_1.png").scaled(Px, Py);
+	listUp << QPixmap(":/Images/sprites/Clyde/UP_2.png").scaled(Px, Py);
 	
 	QList<QPixmap> listDown;
-	listDown << QPixmap("Images/sprites/Clyde/DOWN_1.png").scaled(Px, Py);
-	listDown << QPixmap("Images/sprites/Clyde/DOWN_2.png").scaled(Px, Py);
+	listDown << QPixmap(":/Images/sprites/Clyde/DOWN_1.png").scaled(Px, Py);
+	listDown << QPixmap(":/Images/sprites/Clyde/DOWN_2.png").scaled(Px, Py);
 	
 	QList<QPixmap> listLeft;
-	listLeft << QPixmap("Images/sprites/Clyde/LEFT_1.png").scaled(Px, Py);
-	listLeft << QPixmap("Images/sprites/Clyde/LEFT_2.png").scaled(Px, Py);
+	listLeft << QPixmap(":/Images/sprites/Clyde/LEFT_1.png").scaled(Px, Py);
+	listLeft << QPixmap(":/Images/sprites/Clyde/LEFT_2.png").scaled(Px, Py);
 	
 	QList<QPixmap> listRight;
-	listRight << QPixmap("Images/sprites/Clyde/RIGHT_1.png").scaled(Px, Py);
-	listRight << QPixmap("Images/sprites/Clyde/RIGHT_2.png").scaled(Px, Py);
+	listRight << QPixmap(":/Images/sprites/Clyde/RIGHT_1.png").scaled(Px, Py);
+	listRight << QPixmap(":/Images/sprites/Clyde/RIGHT_2.png").scaled(Px, Py);
 	
 	animationList << listUp << listDown << listLeft << listRight;
 }

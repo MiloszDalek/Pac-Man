@@ -9,6 +9,7 @@
 #include <QPainter>
 #include <QColor>
 #include <QDebug>
+#include <QFile>
 
 #include "dot.h"
 #include "energizer.h"

@@ -91,19 +91,19 @@ void GameBoard::loadSoundEffects()
 	deathSound = new QSoundEffect(this);
 	eatenFruitSound = new QSoundEffect(this);
 	
-	eatenGhostSound->setSource(QUrl::fromLocalFile("Images/sounds/pacman-eatghost/pacman_eatghost.wav"));
-	extraLiveSound->setSource(QUrl::fromLocalFile("Images/sounds/pacman-extrapac/pacman_extrapac.wav"));
-	eatenDotSound->setSource(QUrl::fromLocalFile("Images/sounds/pacman-chomp/short2_pacman_chomp.wav"));
-	beginningSound->setSource(QUrl::fromLocalFile("Images/sounds/pacman-beginning/pacman_beginning.wav"));
-	deathSound->setSource(QUrl::fromLocalFile("Images/sounds/pacman-death/pacman_death.wav"));
-	eatenFruitSound->setSource(QUrl::fromLocalFile("Images/sounds/pacman-eatfruit/pacman_eatfruit.wav"));
+    eatenGhostSound->setSource(QUrl::fromLocalFile(":/Images/sounds/pacman-eatghost/pacman_eatghost.wav"));
+    extraLiveSound->setSource(QUrl::fromLocalFile(":/Images/sounds/pacman-extrapac/pacman_extrapac.wav"));
+    eatenDotSound->setSource(QUrl::fromLocalFile(":/Images/sounds/pacman-chomp/short2_pacman_chomp.wav"));
+    beginningSound->setSource(QUrl::fromLocalFile(":/Images/sounds/pacman-beginning/pacman_beginning.wav"));
+    deathSound->setSource(QUrl::fromLocalFile(":/Images/sounds/pacman-death/pacman_death.wav"));
+    eatenFruitSound->setSource(QUrl::fromLocalFile(":/Images/sounds/pacman-eatfruit/pacman_eatfruit.wav"));
 }
 
 void GameBoard::initializeScoreText()
 {
 	scoreText = new QGraphicsTextItem();
 	
-	int fontId = QFontDatabase::addApplicationFont("Images/Emulogic-zrEw.ttf");
+    int fontId = QFontDatabase::addApplicationFont(":/Images/Emulogic-zrEw.ttf");
 	QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
 	QFont font(fontFamily, FONT_SIZE);
 	
@@ -130,7 +130,7 @@ void GameBoard::initializeLevelText()
 {
 	levelText = new QGraphicsTextItem();
 	
-	int fontId = QFontDatabase::addApplicationFont("Images/Emulogic-zrEw.ttf");
+    int fontId = QFontDatabase::addApplicationFont(":/Images/Emulogic-zrEw.ttf");
 	QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
 	QFont font(fontFamily, FONT_SIZE);
 	
@@ -156,7 +156,7 @@ void GameBoard::initializeHighscoreText()
 	
 	QGraphicsTextItem* label = new QGraphicsTextItem();
 	
-	int fontId = QFontDatabase::addApplicationFont("Images/Emulogic-zrEw.ttf");
+    int fontId = QFontDatabase::addApplicationFont(":/Images/Emulogic-zrEw.ttf");
 	QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
 	QFont font(fontFamily, FONT_SIZE);
 	
@@ -499,7 +499,7 @@ void GameBoard::gameOver()
 {
 	QGraphicsTextItem* gameOverInfo = new QGraphicsTextItem();
 	
-	int fontId = QFontDatabase::addApplicationFont("Images/Emulogic-zrEw.ttf");
+    int fontId = QFontDatabase::addApplicationFont(":/Images/Emulogic-zrEw.ttf");
 	QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
 	QFont font(fontFamily, FONT_SIZE);
 	
@@ -524,7 +524,7 @@ void GameBoard::createReadyText()
 {
 	readyText = new QGraphicsTextItem();
 	
-	int fontId = QFontDatabase::addApplicationFont("Images/Emulogic-zrEw.ttf");
+    int fontId = QFontDatabase::addApplicationFont(":/Images/Emulogic-zrEw.ttf");
 	QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
 	QFont font(fontFamily, FONT_SIZE);
 	

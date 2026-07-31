@@ -2,7 +2,7 @@
 
 Dot::Dot(QGraphicsPixmapItem* parent) : QGraphicsPixmapItem(parent)
 {
-	setPixmap(QPixmap("Images/sprites/dot.png").scaled(4, 4));
+	setPixmap(QPixmap(":/Images/sprites/dot.png").scaled(4, 4));
 }
 
 int Dot::centerX()

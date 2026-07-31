@@ -5,8 +5,9 @@
 TEMPLATE = app
 TARGET = Pac-Man
 INCLUDEPATH += .
+INCLUDEPATH += sources
 
-QT += multimedia
+QT += widgets multimedia
 
 # You can make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -43,3 +44,6 @@ SOURCES += sources/blinky.cpp \
            sources/maze.cpp \
            sources/pinky.cpp \
            sources/player.cpp
+
+RESOURCES += \
+    resources.qrc

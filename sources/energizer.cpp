@@ -2,7 +2,7 @@
 
 Energizer::Energizer(QGraphicsPixmapItem* parent) : QObject(), QGraphicsPixmapItem(parent)
 {
-	setPixmap(QPixmap("Images/sprites/energizer.png"));
+	setPixmap(QPixmap(":/Images/sprites/energizer.png"));
 	
 	animationTimer = new QTimer(this);
 	animationTimer->start(200);
@@ -10,8 +10,8 @@ Energizer::Energizer(QGraphicsPixmapItem* parent) : QObject(), QGraphicsPixmapIt
 	
 	connect(animationTimer, SIGNAL(timeout()), this, SLOT(animate()));
 	
-	white = QPixmap("Images/sprites/energizer.png");
-	black = QPixmap("Images/sprites/energizerBlack.png");
+	white = QPixmap(":/Images/sprites/energizer.png");
+	black = QPixmap(":/Images/sprites/energizerBlack.png");
 }
 
 void Energizer::animate()

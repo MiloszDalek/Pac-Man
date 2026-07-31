@@ -2,7 +2,7 @@
 
 Inky::Inky(QGraphicsItem* parent) : Ghost(parent)
 {
-	setPixmap(QPixmap("Images/sprites/Inky/DOWN_2.png").scaled(Px, Py));
+	setPixmap(QPixmap(":/Images/sprites/Inky/DOWN_2.png").scaled(Px, Py));
 	setPos(InitialInkyPosX, InitialInkyPosY);
 	currentDirection = 'D';
 	fillAnimationList();
@@ -15,7 +15,7 @@ Inky::Inky(QGraphicsItem* parent) : Ghost(parent)
 
 void Inky::setDefault()
 {
-	setPixmap(QPixmap("Images/sprites/Inky/DOWN_2.png").scaled(Px, Py));
+	setPixmap(QPixmap(":/Images/sprites/Inky/DOWN_2.png").scaled(Px, Py));
 	setPos(InitialInkyPosX, InitialInkyPosY);
 	currentDirection = 'D';
 	nextRow = ROW_ABOVE_BOX;
@@ -37,20 +37,20 @@ void Inky::setDefault()
 void Inky::fillAnimationList()
 {	
 	QList<QPixmap> listUp;
-	listUp << QPixmap("Images/sprites/Inky/UP_1.png").scaled(Px, Py);
-	listUp << QPixmap("Images/sprites/Inky/UP_2.png").scaled(Px, Py);
+	listUp << QPixmap(":/Images/sprites/Inky/UP_1.png").scaled(Px, Py);
+	listUp << QPixmap(":/Images/sprites/Inky/UP_2.png").scaled(Px, Py);
 	
 	QList<QPixmap> listDown;
-	listDown << QPixmap("Images/sprites/Inky/DOWN_1.png").scaled(Px, Py);
-	listDown << QPixmap("Images/sprites/Inky/DOWN_2.png").scaled(Px, Py);
+	listDown << QPixmap(":/Images/sprites/Inky/DOWN_1.png").scaled(Px, Py);
+	listDown << QPixmap(":/Images/sprites/Inky/DOWN_2.png").scaled(Px, Py);
 	
 	QList<QPixmap> listLeft;
-	listLeft << QPixmap("Images/sprites/Inky/LEFT_1.png").scaled(Px, Py);
-	listLeft << QPixmap("Images/sprites/Inky/LEFT_2.png").scaled(Px, Py);
+	listLeft << QPixmap(":/Images/sprites/Inky/LEFT_1.png").scaled(Px, Py);
+	listLeft << QPixmap(":/Images/sprites/Inky/LEFT_2.png").scaled(Px, Py);
 	
 	QList<QPixmap> listRight;
-	listRight << QPixmap("Images/sprites/Inky/RIGHT_1.png").scaled(Px, Py);
-	listRight << QPixmap("Images/sprites/Inky/RIGHT_2.png").scaled(Px, Py);
+	listRight << QPixmap(":/Images/sprites/Inky/RIGHT_1.png").scaled(Px, Py);
+	listRight << QPixmap(":/Images/sprites/Inky/RIGHT_2.png").scaled(Px, Py);
 	
 	animationList << listUp << listDown << listLeft << listRight;
 }

@@ -17,6 +17,11 @@ int main(int argc, char *argv[])
     QGraphicsView* introView = new QGraphicsView(introScreen);
     introView->setFixedSize(MAP_WIDTH + 2, MAP_HEIGHT + ADDED_HEIGHT);
     introView->setBackgroundBrush(QBrush(Qt::black));
+
+    introView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    introView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    introView->setFrameShape(QFrame::NoFrame);
+
     introView->show();
 
 	QObject::connect(introScreen, &IntroScreen::startGame, [&]() {
@@ -26,6 +31,10 @@ int main(int argc, char *argv[])
 
 		QGraphicsView* gameView = new QGraphicsView(gameBoard);
 		gameView->setFixedSize(MAP_WIDTH + 2, MAP_HEIGHT + ADDED_HEIGHT);
+
+        gameView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        gameView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        gameView->setFrameShape(QFrame::NoFrame);
         
         gameView->show();
         introView->close();

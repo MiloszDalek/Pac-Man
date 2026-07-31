@@ -2,7 +2,7 @@
 
 Pinky::Pinky(QGraphicsItem* parent) : Ghost(parent)
 {
-	setPixmap(QPixmap("Images/sprites/Pinky/UP_2.png").scaled(Px, Py));
+	setPixmap(QPixmap(":/Images/sprites/Pinky/UP_2.png").scaled(Px, Py));
 	setPos(InitialPinkyPosX, InitialPinkyPosY);
 	currentDirection = 'U';
 	fillAnimationList();
@@ -13,7 +13,7 @@ Pinky::Pinky(QGraphicsItem* parent) : Ghost(parent)
 
 void Pinky::setDefault()
 {
-	setPixmap(QPixmap("Images/sprites/Pinky/UP_2.png").scaled(Px, Py));
+	setPixmap(QPixmap(":/Images/sprites/Pinky/UP_2.png").scaled(Px, Py));
 	setPos(InitialPinkyPosX, InitialPinkyPosY);
 	currentDirection = 'U';	
 	nextRow = ROW_ABOVE_BOX;
@@ -34,20 +34,20 @@ void Pinky::setDefault()
 void Pinky::fillAnimationList()
 {	
 	QList<QPixmap> listUp;
-	listUp << QPixmap("Images/sprites/Pinky/UP_1.png").scaled(Px, Py);
-	listUp << QPixmap("Images/sprites/Pinky/UP_2.png").scaled(Px, Py);
+	listUp << QPixmap(":/Images/sprites/Pinky/UP_1.png").scaled(Px, Py);
+	listUp << QPixmap(":/Images/sprites/Pinky/UP_2.png").scaled(Px, Py);
 	
 	QList<QPixmap> listDown;
-	listDown << QPixmap("Images/sprites/Pinky/DOWN_1.png").scaled(Px, Py);
-	listDown << QPixmap("Images/sprites/Pinky/DOWN_2.png").scaled(Px, Py);
+	listDown << QPixmap(":/Images/sprites/Pinky/DOWN_1.png").scaled(Px, Py);
+	listDown << QPixmap(":/Images/sprites/Pinky/DOWN_2.png").scaled(Px, Py);
 	
 	QList<QPixmap> listLeft;
-	listLeft << QPixmap("Images/sprites/Pinky/LEFT_1.png").scaled(Px, Py);
-	listLeft << QPixmap("Images/sprites/Pinky/LEFT_2.png").scaled(Px, Py);
+	listLeft << QPixmap(":/Images/sprites/Pinky/LEFT_1.png").scaled(Px, Py);
+	listLeft << QPixmap(":/Images/sprites/Pinky/LEFT_2.png").scaled(Px, Py);
 	
 	QList<QPixmap> listRight;
-	listRight << QPixmap("Images/sprites/Pinky/RIGHT_1.png").scaled(Px, Py);
-	listRight << QPixmap("Images/sprites/Pinky/RIGHT_2.png").scaled(Px, Py);
+	listRight << QPixmap(":/Images/sprites/Pinky/RIGHT_1.png").scaled(Px, Py);
+	listRight << QPixmap(":/Images/sprites/Pinky/RIGHT_2.png").scaled(Px, Py);
 	
 	animationList << listUp << listDown << listLeft << listRight;
 }

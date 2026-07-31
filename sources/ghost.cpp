@@ -473,22 +473,22 @@ void Ghost::setFrightenedAnimationIntervals()
 void Ghost::fillFrightenedAnimationList()
 {
 	QList<QPixmap> blueList;
-	blueList << QPixmap("Images/sprites/Frightened/FRIGHTENED_1.png").scaled(Px, Py);
-	blueList << QPixmap("Images/sprites/Frightened/FRIGHTENED_3.png").scaled(Px, Py);
+	blueList << QPixmap(":/Images/sprites/Frightened/FRIGHTENED_1.png").scaled(Px, Py);
+	blueList << QPixmap(":/Images/sprites/Frightened/FRIGHTENED_3.png").scaled(Px, Py);
 	
 	QList<QPixmap> whiteList;
-	whiteList << QPixmap("Images/sprites/Frightened/FRIGHTENED_2.png").scaled(Px, Py);
-	whiteList << QPixmap("Images/sprites/Frightened/FRIGHTENED_4.png").scaled(Px, Py);
+	whiteList << QPixmap(":/Images/sprites/Frightened/FRIGHTENED_2.png").scaled(Px, Py);
+	whiteList << QPixmap(":/Images/sprites/Frightened/FRIGHTENED_4.png").scaled(Px, Py);
 	
 	frightenedAnimationList << blueList << whiteList;
 }
 
 void Ghost::fillEyesList()
 {
-	eyesList << QPixmap("Images/sprites/Eyes/EYES_UP.png").scaled(Px, Py);
-	eyesList << QPixmap("Images/sprites/Eyes/EYES_DOWN.png").scaled(Px, Py);
-	eyesList << QPixmap("Images/sprites/Eyes/EYES_LEFT.png").scaled(Px, Py);
-	eyesList << QPixmap("Images/sprites/Eyes/EYES_RIGHT.png").scaled(Px, Py);
+	eyesList << QPixmap(":/Images/sprites/Eyes/EYES_UP.png").scaled(Px, Py);
+	eyesList << QPixmap(":/Images/sprites/Eyes/EYES_DOWN.png").scaled(Px, Py);
+	eyesList << QPixmap(":/Images/sprites/Eyes/EYES_LEFT.png").scaled(Px, Py);
+	eyesList << QPixmap(":/Images/sprites/Eyes/EYES_RIGHT.png").scaled(Px, Py);
 }
 
 QPointF Ghost::returnTargetGrid()
