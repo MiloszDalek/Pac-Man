@@ -1,12 +1,34 @@
 #include "gameboard.h"
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+
+EM_JS(void, saveHighscoreWeb, (int score), {
+    localStorage.setItem("pacman_highscore", score.toString());
+});
+
+EM_JS(int, loadHighscoreWeb, (), {
+    const score = localStorage.getItem("pacman_highscore");
+
+    if (score === null) {
+        return 0;
+    }
+
+    return parseInt(score);
+});
+
+#endif
+
+
 GameBoard::GameBoard(QObject* parent) : QGraphicsScene(parent), score(0),
 	highscore(0), level(1), dotCounter(0), ghostsEatenCounter(0),
 	liveCounter(LIVE_NUM), liveAdded(false), isFruitOnMap(false),
 	ghostNum(0), fruitCounter(0)
 {
-	Maze* maze = new Maze();
-	addItem(maze);
+    soundManager = new SoundManager();
+
+    mazeImage = new Maze();
+    addItem(mazeImage);
 	
 	eatenTimer = new QTimer(this);
 	modeTimer = new QTimer(this);
@@ -32,7 +54,6 @@ GameBoard::GameBoard(QObject* parent) : QGraphicsScene(parent), score(0),
 	initializeHighscoreText();
 	initializeLevelText();
 	createReadyText();
-	loadSoundEffects();
 	
 	fruitHitbox = QRectF(FruitPosX + GRID_SIZE / 2, FruitPosY + GRID_SIZE / 2, GRID_SIZE, GRID_SIZE);
 	fruit = new Icon();
@@ -71,32 +92,15 @@ GameBoard::GameBoard(QObject* parent) : QGraphicsScene(parent), score(0),
 	connect(player, QOverload<QPointF>::of(&Player::playerPosChanged), this, &GameBoard::updatePlayerPos);
 	connect(player, QOverload<int>::of(&Player::playerDirectionChanged), this, &GameBoard::updatePlayerDirection);
 	connect(blinky, QOverload<QPointF>::of(&Blinky::blinkyPosChanged), this, &GameBoard::updateBlinkyPos);
-	connect(this, SIGNAL(win()), maze, SLOT(startAnimation()));
+    connect(this, SIGNAL(win()), mazeImage, SLOT(startAnimation()));
 	
 	addItem(readyText);
 	
 	eatenTimer->start(PLAYER_MOVE_TIME);
-	beginningSound->play();	
+    soundManager->playBeginningSound();
 	startTimer->start(BEGIN_TIME);
 	
 	//testTargetGirds();
-}
-
-void GameBoard::loadSoundEffects()
-{
-	eatenGhostSound = new QSoundEffect(this);
-	extraLiveSound = new QSoundEffect(this);
-	eatenDotSound = new QSoundEffect(this);
-	beginningSound = new QSoundEffect(this);
-	deathSound = new QSoundEffect(this);
-	eatenFruitSound = new QSoundEffect(this);
-	
-    eatenGhostSound->setSource(QUrl::fromLocalFile(":/Images/sounds/pacman-eatghost/pacman_eatghost.wav"));
-    extraLiveSound->setSource(QUrl::fromLocalFile(":/Images/sounds/pacman-extrapac/pacman_extrapac.wav"));
-    eatenDotSound->setSource(QUrl::fromLocalFile(":/Images/sounds/pacman-chomp/short2_pacman_chomp.wav"));
-    beginningSound->setSource(QUrl::fromLocalFile(":/Images/sounds/pacman-beginning/pacman_beginning.wav"));
-    deathSound->setSource(QUrl::fromLocalFile(":/Images/sounds/pacman-death/pacman_death.wav"));
-    eatenFruitSound->setSource(QUrl::fromLocalFile(":/Images/sounds/pacman-eatfruit/pacman_eatfruit.wav"));
 }
 
 void GameBoard::initializeScoreText()
@@ -188,19 +192,39 @@ void GameBoard::updateHighscoreText()
 }
 
 void GameBoard::saveHighscore() {
+
+#ifdef __EMSCRIPTEN__
+
+    saveHighscoreWeb(highscore);
+
+#else
+
     QFile file("highscore.txt");
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QTextStream out(&file);
         out << highscore;
     }
+
+#endif
+
 }
 
 void GameBoard::loadHighscore() {
+
+#ifdef __EMSCRIPTEN__
+
+    highscore = loadHighscoreWeb();
+
+#else
+
     QFile file("highscore.txt");
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&file);
         in >> highscore;
     }
+
+#endif
+
 }
 
 void GameBoard::checkIfHighscoreExceeded()
@@ -236,7 +260,7 @@ void GameBoard::addOneLive()
 	live->setPos(GRID_SIZE / 2 + 2 * GRID_SIZE * liveCounter, MAP_HEIGHT);
 	addItem(live);
 	liveCounter++;
-	extraLiveSound->play();
+    soundManager->playExtraLiveSound();
 }
 
 void GameBoard::placeFruitInBar()
@@ -269,7 +293,7 @@ void GameBoard::placeDots()
 {
 	for (int y = 0; y < ROWS; y++) {
 		for (int x = 0; x < COLS; x++) {
-			if (maze[y][x] == 3) {
+            if (maze[y][x] == 3) {
 				Dot* dot = new Dot();
 				dots << dot;
 				dot->setPos(GRID_SIZE * x + 8, GRID_SIZE * y + 8);
@@ -301,8 +325,9 @@ void GameBoard::checkIfEaten()
 		QPointF dotPos(dot->centerX(), dot->centerY());
 		
 		if(playerHitbox.contains(dotPos)) {
-			if (!eatenDotSound->isPlaying())
-				eatenDotSound->play();
+            // if (!eatenDotSound->isPlaying())
+            // 	eatenDotSound->play();
+            soundManager->playEatenDotSound();
 			removeItem(dot);
 			dots.removeOne(dot);
 			delete dot;
@@ -364,7 +389,7 @@ void GameBoard::checkDotThresholds()
 				player->centerY() - GRID_SIZE / 2, GRID_SIZE, GRID_SIZE);
 		
 		if (playerHitbox.intersects(fruitHitbox)) {
-			eatenFruitSound->play();
+            soundManager->playEatenFruitSound();
 			score += fruit->catched();
 			checkIfHighscoreExceeded();
 			isFruitOnMap = false;
@@ -408,7 +433,7 @@ void GameBoard::checkIfTouched()
 		QRectF ghostHitbox = QRectF(ghost->centerX() - GRID_SIZE / 2, ghost->centerY() - GRID_SIZE / 2, GRID_SIZE, GRID_SIZE);
 		if (playerHitbox.intersects(ghostHitbox)) {
 			if (ghost->isFrightenedCheck() && !ghost->isEatenCheck()) {
-				eatenGhostSound->play();
+                soundManager->playEatenGhostSound();
 				ghost->setEaten();
 				Icon* point = new Icon(nullptr, ghostsEatenCounter);
 				point->setPos(ghost->x(), ghost->y());
@@ -432,7 +457,7 @@ void GameBoard::dead()
 	decreaseLiveByOne();
 	
 	emit player->catched();
-	deathSound->play();
+    soundManager->playDeathSound();
 }
 
 void GameBoard::decreaseLiveByOne()

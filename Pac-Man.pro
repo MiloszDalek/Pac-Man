@@ -7,7 +7,11 @@ TARGET = Pac-Man
 INCLUDEPATH += .
 INCLUDEPATH += sources
 
-QT += widgets multimedia
+QT += widgets
+
+!wasm {
+    QT += multimedia
+}
 
 # You can make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -29,7 +33,8 @@ HEADERS += sources/blinky.h \
            sources/introscreen.h \
            sources/maze.h \
            sources/pinky.h \
-           sources/player.h
+           sources/player.h \
+           sources/soundManager.h
 SOURCES += sources/blinky.cpp \
            sources/clyde.cpp \
            sources/dot.cpp \
@@ -43,7 +48,8 @@ SOURCES += sources/blinky.cpp \
            sources/main.cpp \
            sources/maze.cpp \
            sources/pinky.cpp \
-           sources/player.cpp
+           sources/player.cpp \
+           sources/soundManager.cpp
 
 RESOURCES += \
     resources.qrc

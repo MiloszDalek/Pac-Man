@@ -5,11 +5,13 @@
 #include <QFont>
 #include <QFontDatabase>
 #include <QFontMetrics>
-#include <QSoundEffect>
 #include <QPainter>
 #include <QColor>
 #include <QDebug>
+
+#ifndef __EMSCRIPTEN__
 #include <QFile>
+#endif
 
 #include "dot.h"
 #include "energizer.h"
@@ -20,6 +22,7 @@
 #include "inky.h"
 #include "clyde.h"
 #include "maze.h"
+#include "soundManager.h"
 
 
 class GameBoard : public QGraphicsScene {
@@ -70,7 +73,6 @@ class GameBoard : public QGraphicsScene {
 	void addOneLive();
 	void gameOver();
 	void createReadyText();
-	void loadSoundEffects();
 	void testTargetGirds(); //used only for test purpose
 	QPixmap createCirclePixmap(const QColor&, int); //used only for test purpose
 	
@@ -99,18 +101,15 @@ class GameBoard : public QGraphicsScene {
 	QTimer* startTimer;
 	QTimer* exitingTimer;
 	QTimer* fruitTimer;
+
+    Maze* mazeImage;
 	
 	QGraphicsTextItem* scoreText;
 	QGraphicsTextItem* highscoreText;
 	QGraphicsTextItem* readyText;
 	QGraphicsTextItem* levelText;
 	
-	QSoundEffect* eatenGhostSound;
-	QSoundEffect* extraLiveSound;
-	QSoundEffect* eatenDotSound;
-	QSoundEffect* beginningSound;
-	QSoundEffect* deathSound;
-	QSoundEffect* eatenFruitSound;
+    SoundManager* soundManager;
 	
 	QRectF fruitHitbox;
 	
