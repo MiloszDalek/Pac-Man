@@ -75,6 +75,8 @@
 #define MAP_HEIGHT (GRID_SIZE * ROWS)
 #define MAP_WIDTH (GRID_SIZE * COLS)
 
+#define ADDED_HEIGHT (5 * GRID_SIZE)
+
 #define LIVE_NUM 4
 
 #define LIVE 'l'

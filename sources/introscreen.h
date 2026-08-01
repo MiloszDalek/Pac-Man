@@ -7,10 +7,13 @@
 
 class IntroScreen : public QGraphicsScene {
     Q_OBJECT
-public:
-	IntroScreen(QObject* parent = nullptr);
-protected:
+  public:
+	  IntroScreen(QObject* parent = nullptr);
+  protected:
     void keyPressEvent(QKeyEvent* event) override;
-signals:
+  private:
+    QGraphicsPixmapItem* title;
+    QGraphicsTextItem* credits;
+  signals:
     void startGame();
 };

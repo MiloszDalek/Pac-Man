@@ -7,8 +7,6 @@
 #include "gameboard.h"
 #include "introscreen.h"
 
-#define ADDED_HEIGHT (5 * GRID_SIZE)
-
 int main(int argc, char *argv[])
 {
 	QApplication game(argc, argv);
