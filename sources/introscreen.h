@@ -9,6 +9,7 @@ class IntroScreen : public QGraphicsScene {
     Q_OBJECT
   public:
 	  IntroScreen(QObject* parent = nullptr);
+      void startGameFromWeb();
   protected:
     void keyPressEvent(QKeyEvent* event) override;
   private:

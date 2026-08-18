@@ -22,6 +22,12 @@ IntroScreen::IntroScreen(QObject* parent) : QGraphicsScene(parent) {
     addItem(credits);
 }
 
-void IntroScreen::keyPressEvent(QKeyEvent* event) {
+void IntroScreen::keyPressEvent(QKeyEvent* event)
+{
+    emit startGame();
+}
+
+void IntroScreen::startGameFromWeb()
+{
     emit startGame();
 }

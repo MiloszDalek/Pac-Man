@@ -76,6 +76,10 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
             touch-action: none;
         }
 
+        .direction-button {
+            display: none;
+        }
+
         #dpad {
             display: flex;
             flex-direction: column;
@@ -115,6 +119,10 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
             transform: scale(0.95);
         }
 
+        #start-button {
+            width: 180px;
+        }
+
         /*
          * Mobile layout
          */
@@ -145,27 +153,33 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                 <!-- Mobile controls -->
         <div id="mobile-controls">
             <div id="dpad">
+
+                <!-- START -->
                 <button
+                    id="start-button"
                     class="control-button"
-                    data-key="ArrowUp"
                 >
-                    ▲
+                    START
                 </button>
+
+                <!-- Direction buttons -->
                 <div id="dpad-row">
                     <button
-                        class="control-button"
+                        class="control-button direction-button"
                         data-key="ArrowLeft"
                     >
                         ◀
                     </button>
+
                     <button
-                        class="control-button"
+                        class="control-button direction-button"
                         data-key="ArrowDown"
                     >
                         ▼
                     </button>
+
                     <button
-                        class="control-button"
+                        class="control-button direction-button"
                         data-key="ArrowRight"
                     >
                         ▶
@@ -199,6 +213,17 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
             }
         }
 
+        function startGameFromWeb() {
+            if (typeof Module !== "undefined" && Module.ccall) {
+                Module.ccall(
+                    "startGameFromWeb",
+                    null,
+                    [],
+                    []
+                );
+            }
+        }
+
         /*
         * Mobile controls
         */
@@ -216,6 +241,36 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                 button.addEventListener("mousedown", function(event) {
                     event.preventDefault();
                     sendKey(key);
+                });
+            });
+        }
+
+        function setupStartButton() {
+            const startButton = document.getElementById("start-button");
+
+            startButton.addEventListener("pointerdown", function(event) {
+                event.preventDefault();
+
+                startGameFromWeb();
+
+                // Zmieniamy START na strzałkę
+                startButton.textContent = "▲";
+                startButton.id = "up-button";
+
+                // Pokazujemy pozostałe kierunki
+                document
+                    .querySelectorAll(".direction-button")
+                    .forEach(button => {
+                        button.style.display = "flex";
+                    });
+
+                // Przekształcamy START w przycisk góra
+                startButton.classList.add("direction-button");
+                startButton.dataset.key = "ArrowUp";
+
+                startButton.addEventListener("pointerdown", function(event) {
+                    event.preventDefault();
+                    sendKey("ArrowUp");
                 });
             });
         }
@@ -241,6 +296,7 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                     qt: {
                         onLoaded: () =>  {
                             showUi(screen);
+                            document.getElementById("mobile-controls").style.display = "flex";
                             setupMobileControls();
                         },
                         onExit: exitData =>
