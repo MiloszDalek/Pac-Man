@@ -100,7 +100,7 @@ GameBoard::GameBoard(QObject* parent) : QGraphicsScene(parent), score(0),
     soundManager->playBeginningSound();
 	startTimer->start(BEGIN_TIME);
 	
-	//testTargetGirds();
+    testTargetGirds();
 }
 
 void GameBoard::initializeScoreText()
@@ -325,8 +325,6 @@ void GameBoard::checkIfEaten()
 		QPointF dotPos(dot->centerX(), dot->centerY());
 		
 		if(playerHitbox.contains(dotPos)) {
-            // if (!eatenDotSound->isPlaying())
-            // 	eatenDotSound->play();
             soundManager->playEatenDotSound();
 			removeItem(dot);
 			dots.removeOne(dot);
