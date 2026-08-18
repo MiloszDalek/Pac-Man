@@ -176,48 +176,49 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
     <script type="text/javascript">
         function sendKey(key) {
-            const input = document.querySelector(".qt-window-input-element");
+            const keyMap = {
+                ArrowUp: 38,
+                ArrowDown: 40,
+                ArrowLeft: 37,
+                ArrowRight: 39
+            };
 
-            if (!input)
+            const qtKey = keyMap[key];
+
+            if (qtKey === undefined)
                 return;
 
-            input.focus();
-
-            const event = new KeyboardEvent("keydown", {
-                key: key,
-                code: key,
-                bubbles: true,
-                cancelable: true
-            });
-
-            input.dispatchEvent(event);
+            if (typeof Module !== "undefined" && Module.ccall) {
+                Module.ccall(
+                    "handleWebKey",
+                    null,
+                    ["number"],
+                    [qtKey]
+                );
+            }
         }
 
         /*
-         * Mobile controls
-         */
+        * Mobile controls
+        */
         function setupMobileControls() {
-            const buttons =
-                document.querySelectorAll(".control-button");
+            const buttons = document.querySelectorAll(".control-button");
 
             buttons.forEach(button => {
                 const key = button.dataset.key;
 
                 button.addEventListener("touchstart", function(event) {
-
                     event.preventDefault();
-
                     sendKey(key);
-
                 }, { passive: false });
 
                 button.addEventListener("mousedown", function(event) {
-
                     event.preventDefault();
                     sendKey(key);
                 });
             });
         }
+
         async function init()
         {
             const spinner = document.querySelector('#qtspinner');

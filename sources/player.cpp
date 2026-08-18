@@ -43,22 +43,27 @@ void Player::setDefault()
 
 void Player::keyPressEvent(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Up && alive) {
+    handleDirection(event->key());
+}
+
+void Player::handleDirection(int key)
+{
+    if (key == Qt::Key_Up && alive) {
 		buffDirection = 'U';
 		if (!corectionTimer->isActive())
 			moveTimer->start(PLAYER_MOVE_TIME);
 	}
-	else if (event->key() == Qt::Key_Down && alive) {
+    else if (key == Qt::Key_Down && alive) {
 		buffDirection = 'D';
 		if (!corectionTimer->isActive())
 			moveTimer->start(PLAYER_MOVE_TIME);
 	}
-	else if (event->key() == Qt::Key_Left && alive) {
+    else if (key == Qt::Key_Left && alive) {
 		buffDirection = 'L';
 		if (!corectionTimer->isActive())
 			moveTimer->start(PLAYER_MOVE_TIME);
 	}
-	else if (event->key() == Qt::Key_Right && alive) {
+    else if (key == Qt::Key_Right && alive) {
 		buffDirection = 'R';
 		if (!corectionTimer->isActive())
 			moveTimer->start(PLAYER_MOVE_TIME);

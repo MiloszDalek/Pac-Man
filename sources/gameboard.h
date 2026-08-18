@@ -30,7 +30,11 @@ class GameBoard : public QGraphicsScene {
 
   public:
 	GameBoard(QObject* parent = nullptr);
-	
+
+    #ifdef __EMSCRIPTEN__
+      void handleWebKey(int);
+    #endif
+
   public slots:
 	void checkIfEaten();
 	void checkIfTouched();

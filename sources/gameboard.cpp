@@ -17,6 +17,17 @@ EM_JS(int, loadHighscoreWeb, (), {
     return parseInt(score);
 });
 
+GameBoard* webGameBoard = nullptr;
+
+extern "C" {
+    EMSCRIPTEN_KEEPALIVE
+        void handleWebKey(int key)
+    {
+        if (webGameBoard)
+            webGameBoard->handleWebKey(key);
+    }
+}
+
 #endif
 
 
@@ -25,6 +36,10 @@ GameBoard::GameBoard(QObject* parent) : QGraphicsScene(parent), score(0),
 	liveCounter(LIVE_NUM), liveAdded(false), isFruitOnMap(false),
 	ghostNum(0), fruitCounter(0)
 {
+    #ifdef __EMSCRIPTEN__
+        webGameBoard = this;
+    #endif
+
     soundManager = new SoundManager();
 
     mazeImage = new Maze();
@@ -102,6 +117,13 @@ GameBoard::GameBoard(QObject* parent) : QGraphicsScene(parent), score(0),
 	
     // testTargetGirds();
 }
+
+#ifdef __EMSCRIPTEN__
+void GameBoard::handleWebKey(int key)
+{
+    player->handleDirection(key);
+}
+#endif
 
 void GameBoard::initializeScoreText()
 {

@@ -12,6 +12,7 @@ class Player : public Entity {
 	Player(QGraphicsItem* parent = nullptr);
 	void stop();
 	void setDefault();
+    void handleDirection(int key);
 	
   public slots:
 	void move();
