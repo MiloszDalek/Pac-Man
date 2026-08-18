@@ -20,7 +20,7 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
     <style>
       /* Make the html body cover the entire (visual) viewport with no scroll bars. */
-        html, body {
+       html, body {
             padding: 0;
             margin: 0;
             width: 100%;
@@ -29,14 +29,103 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
             background: black;
         }
 
-        #screen {
+        #game-container {
             width: 100vw;
             height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            background: black;
+        }
+
+        #screen {
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         #qt-shadow-container {
             width: 100% !important;
             height: 100% !important;
+        }
+
+        /*
+         * Mobile controls
+         * Hidden by default on desktop.
+         */
+        #mobile-controls {
+            display: none;
+
+            width: 100%;
+            height: 25vh;
+
+            flex-shrink: 0;
+
+            justify-content: center;
+            align-items: center;
+
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: none;
+        }
+
+        #dpad {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #dpad-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-button {
+            width: 64px;
+            height: 64px;
+
+            border: 2px solid white;
+            border-radius: 12px;
+
+            background: #111;
+            color: white;
+
+            font-size: 28px;
+            font-weight: bold;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .control-button:active {
+            background: #333;
+            transform: scale(0.95);
+        }
+
+        /*
+         * Mobile layout
+         */
+        @media (pointer: coarse) {
+            #screen {
+                height: 75vh;
+                flex: none;
+            }
+
+            #mobile-controls {
+                display: flex;
+            }
         }
     </style>
   </head>
@@ -49,9 +138,86 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
         <noscript>JavaScript is disabled. Please enable JavaScript to use this application.</noscript>
       </center>
     </figure>
-    <div id="screen"></div>
+    <div id="game-container">
+        <div id="screen"></div>
+
+                <!-- Mobile controls -->
+        <div id="mobile-controls">
+            <div id="dpad">
+                <button
+                    class="control-button"
+                    data-key="ArrowUp"
+                >
+                    ▲
+                </button>
+                <div id="dpad-row">
+                    <button
+                        class="control-button"
+                        data-key="ArrowLeft"
+                    >
+                        ◀
+                    </button>
+                    <button
+                        class="control-button"
+                        data-key="ArrowDown"
+                    >
+                        ▼
+                    </button>
+                    <button
+                        class="control-button"
+                        data-key="ArrowRight"
+                    >
+                        ▶
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script type="text/javascript">
+        function sendKey(key) {
+            const input = document.querySelector(".qt-window-input-element");
+
+            if (!input)
+                return;
+
+            input.focus();
+
+            const event = new KeyboardEvent("keydown", {
+                key: key,
+                code: key,
+                bubbles: true,
+                cancelable: true
+            });
+
+            input.dispatchEvent(event);
+        }
+
+        /*
+         * Mobile controls
+         */
+        function setupMobileControls() {
+            const buttons =
+                document.querySelectorAll(".control-button");
+
+            buttons.forEach(button => {
+                const key = button.dataset.key;
+
+                button.addEventListener("touchstart", function(event) {
+
+                    event.preventDefault();
+
+                    sendKey(key);
+
+                }, { passive: false });
+
+                button.addEventListener("mousedown", function(event) {
+
+                    event.preventDefault();
+                    sendKey(key);
+                });
+            });
+        }
         async function init()
         {
             const spinner = document.querySelector('#qtspinner');
@@ -71,7 +237,10 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
                 const instance = await qtLoad({
                     qt: {
-                        onLoaded: () => showUi(screen),
+                        onLoaded: () =>  {
+                            showUi(screen);
+                            setupMobileControls();
+                        },
                         onExit: exitData =>
                         {
                             status.innerHTML = 'Application exit';

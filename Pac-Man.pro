@@ -26,6 +26,7 @@ HEADERS += sources/blinky.h \
            sources/dot.h \
            sources/energizer.h \
            sources/entity.h \
+           sources/gameView.h \
            sources/gameboard.h \
            sources/ghost.h \
            sources/icon.h \
@@ -40,6 +41,7 @@ SOURCES += sources/blinky.cpp \
            sources/dot.cpp \
            sources/energizer.cpp \
            sources/entity.cpp \
+           sources/gameView.cpp \
            sources/gameboard.cpp \
            sources/ghost.cpp \
            sources/icon.cpp \

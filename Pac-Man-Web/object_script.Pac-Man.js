@@ -3,6 +3,7 @@ clyde.obj
 dot.obj
 energizer.obj
 entity.obj
+gameView.obj
 gameboard.obj
 ghost.obj
 icon.obj

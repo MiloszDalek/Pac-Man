@@ -100,7 +100,7 @@ GameBoard::GameBoard(QObject* parent) : QGraphicsScene(parent), score(0),
     soundManager->playBeginningSound();
 	startTimer->start(BEGIN_TIME);
 	
-    testTargetGirds();
+    // testTargetGirds();
 }
 
 void GameBoard::initializeScoreText()
