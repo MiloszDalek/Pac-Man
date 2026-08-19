@@ -119,6 +119,10 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
             transform: scale(0.95);
         }
 
+        .control-button.direction-button {
+            display: none;
+        }
+
         #start-button {
             width: 180px;
         }
@@ -228,7 +232,7 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
         * Mobile controls
         */
         function setupMobileControls() {
-            const buttons = document.querySelectorAll(".control-button");
+            const buttons = document.querySelectorAll(".control-button[data-key]");
 
             buttons.forEach(button => {
                 const key = button.dataset.key;
@@ -256,6 +260,7 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                 // Zmieniamy START na strzałkę
                 startButton.textContent = "▲";
                 startButton.id = "up-button";
+                startButton.style.width = "64px";
 
                 // Pokazujemy pozostałe kierunki
                 document
@@ -265,14 +270,13 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                     });
 
                 // Przekształcamy START w przycisk góra
-                startButton.classList.add("direction-button");
                 startButton.dataset.key = "ArrowUp";
 
                 startButton.addEventListener("pointerdown", function(event) {
                     event.preventDefault();
                     sendKey("ArrowUp");
                 });
-            });
+            }, { once: true });
         }
 
         async function init()
@@ -296,7 +300,6 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                     qt: {
                         onLoaded: () =>  {
                             showUi(screen);
-                            document.getElementById("mobile-controls").style.display = "flex";
                             setupMobileControls();
                             setupStartButton();
                         },
