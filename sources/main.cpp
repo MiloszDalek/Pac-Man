@@ -38,11 +38,9 @@ int main(int argc, char *argv[])
     webIntroScreen = introScreen;
     #endif
 
-    GameView* introView = new GameView(introScreen);
+    GameView* gameView = new GameView(introScreen);
 
     introScreen->setSceneRect(0, 0, MAP_WIDTH, MAP_HEIGHT + ADDED_HEIGHT);
-
-    introView->show();
 
 	QObject::connect(introScreen, &IntroScreen::startGame, [&]() {
 
@@ -51,11 +49,11 @@ int main(int argc, char *argv[])
         gameBoard->setBackgroundBrush(QBrush(Qt::black));
         gameBoard->setSceneRect(0, -ADDED_HEIGHT * 0.6, MAP_WIDTH, MAP_HEIGHT + ADDED_HEIGHT);
 
-        GameView* gameView = new GameView(gameBoard);
-        
+        gameView->setScene(gameBoard);
         gameView->show();
-        introView->close();
     });
+
+    gameView->show();
 	
 	return game.exec();
 }
