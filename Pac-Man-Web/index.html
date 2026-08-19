@@ -194,12 +194,12 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
     </div>
 
     <script type="text/javascript">
-        function sendKey(key) {
+        function sendKey(key, wasmInstance) {
             const keyMap = {
-                ArrowUp: 38,
-                ArrowDown: 40,
-                ArrowLeft: 37,
-                ArrowRight: 39
+                ArrowUp: 16777235,
+                ArrowDown: 16777237,
+                ArrowLeft: 16777234,
+                ArrowRight: 16777236
             };
 
             const qtKey = keyMap[key];
@@ -207,13 +207,18 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
             if (qtKey === undefined)
                 return;
 
-            if (typeof Module !== "undefined" && Module._handleWebKey)
-                Module._handleWebKey(qtKey);
+            if (wasmInstance && typeof wasmInstance._handleWebKey === "function") {
+                wasmInstance._handleWebKey(qtKey);
+                return true;
+            }
+
+            console.error("handleWebKey is not available in the WebAssembly module");
+            return false;
         }
 
-        function startGameFromWeb() {
-            if (typeof Module !== "undefined" && Module._startGameFromWeb) {
-                Module._startGameFromWeb();
+        function startGameFromWeb(wasmInstance) {
+            if (wasmInstance && wasmInstance._startGameFromWeb) {
+                wasmInstance._startGameFromWeb();
                 return true;
             }
 
@@ -224,31 +229,24 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
         /*
         * Mobile controls
         */
-        function setupMobileControls() {
+        function setupMobileControls(wasmInstance) {
             const buttons = document.querySelectorAll(".control-button[data-key]");
 
             buttons.forEach(button => {
-                const key = button.dataset.key;
-
-                button.addEventListener("touchstart", function(event) {
+                button.addEventListener("click", function(event) {
                     event.preventDefault();
-                    sendKey(key);
-                }, { passive: false });
-
-                button.addEventListener("mousedown", function(event) {
-                    event.preventDefault();
-                    sendKey(key);
+                    sendKey(button.dataset.key, wasmInstance);
                 });
             });
         }
 
-        function setupStartButton() {
+        function setupStartButton(wasmInstance) {
             const startButton = document.getElementById("start-button");
 
-            startButton.addEventListener("pointerdown", function(event) {
+            startButton.addEventListener("click", function(event) {
                 event.preventDefault();
 
-                if (!startGameFromWeb())
+                if (!startGameFromWeb(wasmInstance))
                     return;
 
                 // Zmieniamy START na strzałkę
@@ -266,9 +264,9 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                 // Przekształcamy START w przycisk góra
                 startButton.dataset.key = "ArrowUp";
 
-                startButton.addEventListener("pointerdown", function(event) {
+                startButton.addEventListener("click", function(event) {
                     event.preventDefault();
-                    sendKey("ArrowUp");
+                    sendKey("ArrowUp", wasmInstance);
                 });
             }, { once: true });
         }
@@ -297,8 +295,6 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                             showUi(screen);
                             if (window.matchMedia('(pointer: coarse)').matches)
                                 mobileControls.style.display = 'flex';
-                            setupMobileControls();
-                            setupStartButton();
                         },
                         onExit: exitData =>
                         {
@@ -314,6 +310,9 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                         
                     }
                 });
+
+                setupMobileControls(instance);
+                setupStartButton(instance);
             } catch (e) {
                 console.error(e);
                 console.error(e.stack);
