@@ -155,7 +155,7 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
         <div id="screen"></div>
 
                 <!-- Mobile controls -->
-        <div id="mobile-controls">
+        <div id="mobile-controls" style="display: none;">
             <div id="dpad">
 
                 <!-- START -->
@@ -284,6 +284,7 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
             const spinner = document.querySelector('#qtspinner');
             const screen = document.querySelector('#screen');
             const status = document.querySelector('#qtstatus');
+            const mobileControls = document.querySelector('#mobile-controls');
 
             const showUi = (ui) => {
                 [spinner, screen].forEach(element => element.style.display = 'none');
@@ -300,6 +301,8 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                     qt: {
                         onLoaded: () =>  {
                             showUi(screen);
+                            if (window.matchMedia('(pointer: coarse)').matches)
+                                mobileControls.style.display = 'flex';
                             setupMobileControls();
                             setupStartButton();
                         },
