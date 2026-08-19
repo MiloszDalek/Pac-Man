@@ -33,6 +33,7 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
         #game-container {
             width: 100vw;
             height: 100vh;
+            touch-action: none;
 
             display: flex;
             flex-direction: column;
@@ -270,14 +271,17 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
             });
         }
 
-        function setupSwipeControls(screen, wasmInstance) {
+        function setupSwipeControls(gameContainer, wasmInstance) {
             let startX = 0;
             let startY = 0;
             let swipeActive = false;
             const swipeThreshold = 30;
 
-            screen.addEventListener("touchstart", function(event) {
+            gameContainer.addEventListener("touchstart", function(event) {
                 if (event.touches.length !== 1)
+                    return;
+
+                if (event.target.closest && event.target.closest("#mobile-controls"))
                     return;
 
                 const touch = event.touches[0];
@@ -287,9 +291,14 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                 event.preventDefault();
             }, { passive: false });
 
-            screen.addEventListener("touchend", function(event) {
+            gameContainer.addEventListener("touchend", function(event) {
                 if (!swipeActive || event.changedTouches.length !== 1)
                     return;
+
+                if (event.target.closest && event.target.closest("#mobile-controls")) {
+                    swipeActive = false;
+                    return;
+                }
 
                 const touch = event.changedTouches[0];
                 const deltaX = touch.clientX - startX;
@@ -308,7 +317,7 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                     sendKey(deltaY > 0 ? "ArrowDown" : "ArrowUp", wasmInstance);
             }, { passive: false });
 
-            screen.addEventListener("touchcancel", function() {
+            gameContainer.addEventListener("touchcancel", function() {
                 swipeActive = false;
             });
         }
@@ -367,6 +376,7 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
         {
             const spinner = document.querySelector('#qtspinner');
             const screen = document.querySelector('#screen');
+            const gameContainer = document.querySelector('#game-container');
             const status = document.querySelector('#qtstatus');
             const mobileControls = document.querySelector('#mobile-controls');
 
@@ -404,7 +414,7 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                 });
 
                 setupMobileControls(instance);
-                setupSwipeControls(screen, instance);
+                setupSwipeControls(gameContainer, instance);
                 setupStartButton(instance);
                 setupRetryButton(instance);
             } catch (e) {
