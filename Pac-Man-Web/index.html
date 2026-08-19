@@ -264,22 +264,24 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
             let swipeActive = false;
             const swipeThreshold = 30;
 
-            screen.addEventListener("pointerdown", function(event) {
-                if (event.pointerType !== "touch")
+            screen.addEventListener("touchstart", function(event) {
+                if (event.touches.length !== 1)
                     return;
 
-                startX = event.clientX;
-                startY = event.clientY;
+                const touch = event.touches[0];
+                startX = touch.clientX;
+                startY = touch.clientY;
                 swipeActive = true;
                 event.preventDefault();
-            });
+            }, { passive: false });
 
-            screen.addEventListener("pointerup", function(event) {
-                if (!swipeActive || event.pointerType !== "touch")
+            screen.addEventListener("touchend", function(event) {
+                if (!swipeActive || event.changedTouches.length !== 1)
                     return;
 
-                const deltaX = event.clientX - startX;
-                const deltaY = event.clientY - startY;
+                const touch = event.changedTouches[0];
+                const deltaX = touch.clientX - startX;
+                const deltaY = touch.clientY - startY;
                 const distance = Math.max(Math.abs(deltaX), Math.abs(deltaY));
 
                 swipeActive = false;
@@ -292,9 +294,9 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                     sendKey(deltaX > 0 ? "ArrowRight" : "ArrowLeft", wasmInstance);
                 else
                     sendKey(deltaY > 0 ? "ArrowDown" : "ArrowUp", wasmInstance);
-            });
+            }, { passive: false });
 
-            screen.addEventListener("pointercancel", function() {
+            screen.addEventListener("touchcancel", function() {
                 swipeActive = false;
             });
         }
@@ -308,18 +310,15 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                 if (!startGameFromWeb(wasmInstance))
                     return;
 
-                // Zmieniamy START na strzałkę
                 startButton.textContent = "▲";
                 startButton.id = "up-button";
 
-                // Pokazujemy pozostałe kierunki
                 document
                     .querySelectorAll(".direction-button")
                     .forEach(button => {
                         button.style.display = "flex";
                     });
 
-                // Przekształcamy START w przycisk góra
                 startButton.dataset.key = "ArrowUp";
 
                 startButton.addEventListener("click", function(event) {
