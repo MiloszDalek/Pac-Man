@@ -33,6 +33,7 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
         #game-container {
             width: 100vw;
             height: 100vh;
+            position: relative;
             touch-action: none;
 
             display: flex;
@@ -47,6 +48,8 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
             height: 100%;
             min-height: 0;
             touch-action: none;
+            position: relative;
+            z-index: 1;
 
             display: flex;
             justify-content: center;
@@ -92,6 +95,16 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
             user-select: none;
             -webkit-user-select: none;
+            touch-action: none;
+            position: relative;
+            z-index: 3;
+        }
+
+        #swipe-layer {
+            display: none;
+            position: absolute;
+            inset: 0;
+            z-index: 2;
             touch-action: none;
         }
 
@@ -177,6 +190,7 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
     </figure>
     <div id="game-container">
         <div id="screen"></div>
+        <div id="swipe-layer" aria-hidden="true"></div>
 
                 <!-- Mobile controls -->
         <div id="mobile-controls" style="display: none;">
@@ -271,17 +285,18 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
             });
         }
 
-        function setupSwipeControls(gameContainer, wasmInstance) {
+        function setupSwipeControls(swipeLayer, mobileControls, wasmInstance) {
             let startX = 0;
             let startY = 0;
             let swipeActive = false;
             const swipeThreshold = 30;
 
-            gameContainer.addEventListener("touchstart", function(event) {
+            function handleTouchStart(event) {
                 if (event.touches.length !== 1)
                     return;
 
-                if (event.target.closest && event.target.closest("#mobile-controls"))
+                if (event.currentTarget === mobileControls &&
+                    event.target.closest && event.target.closest(".control-button"))
                     return;
 
                 const touch = event.touches[0];
@@ -289,16 +304,11 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                 startY = touch.clientY;
                 swipeActive = true;
                 event.preventDefault();
-            }, { passive: false });
+            }
 
-            gameContainer.addEventListener("touchend", function(event) {
+            function handleTouchEnd(event) {
                 if (!swipeActive || event.changedTouches.length !== 1)
                     return;
-
-                if (event.target.closest && event.target.closest("#mobile-controls")) {
-                    swipeActive = false;
-                    return;
-                }
 
                 const touch = event.changedTouches[0];
                 const deltaX = touch.clientX - startX;
@@ -315,10 +325,22 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                     sendKey(deltaX > 0 ? "ArrowRight" : "ArrowLeft", wasmInstance);
                 else
                     sendKey(deltaY > 0 ? "ArrowDown" : "ArrowUp", wasmInstance);
-            }, { passive: false });
+            }
 
-            gameContainer.addEventListener("touchcancel", function() {
+            function handleTouchCancel() {
                 swipeActive = false;
+            }
+
+            function handleTouchMove(event) {
+                if (swipeActive)
+                    event.preventDefault();
+            }
+
+            [swipeLayer, mobileControls].forEach(target => {
+                target.addEventListener("touchstart", handleTouchStart, { passive: false, capture: true });
+                target.addEventListener("touchend", handleTouchEnd, { passive: false, capture: true });
+                target.addEventListener("touchcancel", handleTouchCancel, { capture: true });
+                target.addEventListener("touchmove", handleTouchMove, { passive: false, capture: true });
             });
         }
 
@@ -376,7 +398,7 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
         {
             const spinner = document.querySelector('#qtspinner');
             const screen = document.querySelector('#screen');
-            const gameContainer = document.querySelector('#game-container');
+            const swipeLayer = document.querySelector('#swipe-layer');
             const status = document.querySelector('#qtstatus');
             const mobileControls = document.querySelector('#mobile-controls');
 
@@ -395,8 +417,10 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                     qt: {
                         onLoaded: () =>  {
                             showUi(screen);
-                            if (window.matchMedia('(pointer: coarse)').matches)
+                            if (window.matchMedia('(pointer: coarse)').matches) {
                                 mobileControls.style.display = 'flex';
+                                swipeLayer.style.display = 'block';
+                            }
                         },
                         onExit: exitData =>
                         {
@@ -414,7 +438,7 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                 });
 
                 setupMobileControls(instance);
-                setupSwipeControls(gameContainer, instance);
+                setupSwipeControls(swipeLayer, mobileControls, instance);
                 setupStartButton(instance);
                 setupRetryButton(instance);
             } catch (e) {
