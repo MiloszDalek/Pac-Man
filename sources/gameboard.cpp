@@ -33,7 +33,7 @@ extern "C" {
 
 GameBoard::GameBoard(QObject* parent) : QGraphicsScene(parent), score(0),
 	highscore(0), level(1), dotCounter(0), ghostsEatenCounter(0),
-	liveCounter(LIVE_NUM), liveAdded(false), isFruitOnMap(false),
+	liveCounter(LIVE_NUM), liveAdded(false), isFruitOnMap(false), inputEnabled(false),
 	ghostNum(0), fruitCounter(0)
 {
     #ifdef __EMSCRIPTEN__
@@ -121,7 +121,8 @@ GameBoard::GameBoard(QObject* parent) : QGraphicsScene(parent), score(0),
 #ifdef __EMSCRIPTEN__
 void GameBoard::handleWebKey(int key)
 {
-    player->handleDirection(key);
+	if (inputEnabled)
+		player->handleDirection(key);
 }
 #endif
 
@@ -624,6 +625,7 @@ void GameBoard::startGame()
 {
 	startTimer->stop();
 	removeItem(readyText);
+	inputEnabled = true;
 	
 	foreach(Ghost* ghost, ghosts) {
 		ghost->setStartSpeed();
@@ -636,6 +638,7 @@ void GameBoard::startGame()
 
 void GameBoard::setMapBasic()
 {
+	inputEnabled = false;
 	player->setDefault();
 	addItem(player);
 

@@ -10,7 +10,7 @@ IntroScreen::IntroScreen(QObject* parent) : QGraphicsScene(parent) {
 
     addItem(title);
 
-    credits = new QGraphicsTextItem("Created by Miłosz Dałek | Inspired by Pac-Man");
+    credits = new QGraphicsTextItem("Created by Miłosz Dałek");
 
     QFont font("Arial", 10);
     credits->setFont(font);

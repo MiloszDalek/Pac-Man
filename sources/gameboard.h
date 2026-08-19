@@ -89,6 +89,7 @@ class GameBoard : public QGraphicsScene {
 	int liveCounter;
 	bool liveAdded;
 	bool isFruitOnMap;
+	bool inputEnabled;
 	int ghostNum;
 	int fruitCounter;
 	
