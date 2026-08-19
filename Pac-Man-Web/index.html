@@ -65,6 +65,7 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
             width: 100%;
             height: 25vh;
+            --control-size: clamp(64px, min(18vw, 10vh), 110px);
 
             flex-shrink: 0;
 
@@ -93,8 +94,8 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
         }
 
         .control-button {
-            width: 64px;
-            height: 64px;
+            width: var(--control-size);
+            height: var(--control-size);
 
             border: 2px solid white;
             border-radius: 12px;
@@ -102,7 +103,7 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
             background: #111;
             color: white;
 
-            font-size: 28px;
+            font-size: clamp(24px, 7vw, 40px);
             font-weight: bold;
 
             display: flex;
@@ -124,7 +125,7 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
         }
 
         #start-button {
-            width: 180px;
+            width: calc(var(--control-size) * 2.5);
         }
 
         /*
@@ -252,7 +253,6 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                 // Zmieniamy START na strzałkę
                 startButton.textContent = "▲";
                 startButton.id = "up-button";
-                startButton.style.width = "64px";
 
                 // Pokazujemy pozostałe kierunki
                 document
