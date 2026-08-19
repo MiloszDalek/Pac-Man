@@ -26,6 +26,12 @@ extern "C" {
         if (webGameBoard)
             webGameBoard->handleWebKey(key);
     }
+
+		EMSCRIPTEN_KEEPALIVE
+		bool isGameOverWeb()
+		{
+			return webGameBoard && webGameBoard->isGameOver();
+		}
 }
 
 #endif
@@ -34,6 +40,7 @@ extern "C" {
 GameBoard::GameBoard(QObject* parent) : QGraphicsScene(parent), score(0),
 	highscore(0), level(1), dotCounter(0), ghostsEatenCounter(0),
 	liveCounter(LIVE_NUM), liveAdded(false), isFruitOnMap(false), inputEnabled(false),
+	gameOverActive(false),
 	ghostNum(0), fruitCounter(0)
 {
     #ifdef __EMSCRIPTEN__
@@ -123,6 +130,13 @@ void GameBoard::handleWebKey(int key)
 {
 	if (inputEnabled)
 		player->handleDirection(key);
+}
+#endif
+
+#ifdef __EMSCRIPTEN__
+bool GameBoard::isGameOver() const
+{
+	return gameOverActive;
 }
 #endif
 
@@ -543,6 +557,7 @@ void GameBoard::changeGhostMode()
 
 void GameBoard::gameOver()
 {
+	gameOverActive = true;
 	QGraphicsTextItem* gameOverInfo = new QGraphicsTextItem();
 	
     int fontId = QFontDatabase::addApplicationFont(":/Images/Emulogic-zrEw.ttf");

@@ -145,6 +145,11 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
             width: calc(var(--control-size) * 2.5);
         }
 
+        #retry-button {
+            display: none;
+            width: calc(var(--control-size) * 2.5);
+        }
+
         /*
          * Mobile layout
          */
@@ -182,6 +187,13 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                     class="control-button"
                 >
                     START
+                </button>
+
+                <button
+                    id="retry-button"
+                    class="control-button"
+                >
+                    RETRY
                 </button>
 
                 <!-- Direction buttons -->
@@ -328,6 +340,23 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
             }, { once: true });
         }
 
+        function setupRetryButton(wasmInstance) {
+            const retryButton = document.getElementById("retry-button");
+
+            retryButton.addEventListener("click", function(event) {
+                event.preventDefault();
+                window.location.reload();
+            });
+
+            if (typeof wasmInstance._isGameOverWeb !== "function")
+                return;
+
+            window.setInterval(function() {
+                if (wasmInstance._isGameOverWeb())
+                    retryButton.style.display = "flex";
+            }, 250);
+        }
+
         async function init()
         {
             const spinner = document.querySelector('#qtspinner');
@@ -371,6 +400,7 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
                 setupMobileControls(instance);
                 setupSwipeControls(screen, instance);
                 setupStartButton(instance);
+                setupRetryButton(instance);
             } catch (e) {
                 console.error(e);
                 console.error(e.stack);

@@ -32,8 +32,11 @@ class GameBoard : public QGraphicsScene {
 	GameBoard(QObject* parent = nullptr);
 
     #ifdef __EMSCRIPTEN__
-      void handleWebKey(int);
-    #endif
+    
+	void handleWebKey(int);
+	bool isGameOver() const;
+    
+	#endif
 
   public slots:
 	void checkIfEaten();
@@ -90,6 +93,7 @@ class GameBoard : public QGraphicsScene {
 	bool liveAdded;
 	bool isFruitOnMap;
 	bool inputEnabled;
+	bool gameOverActive;
 	int ghostNum;
 	int fruitCounter;
 	
