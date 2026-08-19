@@ -37,6 +37,7 @@ compile_commands.json
 # IDE files
 .vscode/
 .idea/
+.qtcreator/
 
 # OS files
 .DS_Store
