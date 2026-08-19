@@ -207,25 +207,18 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
             if (qtKey === undefined)
                 return;
 
-            if (typeof Module !== "undefined" && Module.ccall) {
-                Module.ccall(
-                    "handleWebKey",
-                    null,
-                    ["number"],
-                    [qtKey]
-                );
-            }
+            if (typeof Module !== "undefined" && Module._handleWebKey)
+                Module._handleWebKey(qtKey);
         }
 
         function startGameFromWeb() {
-            if (typeof Module !== "undefined" && Module.ccall) {
-                Module.ccall(
-                    "startGameFromWeb",
-                    null,
-                    [],
-                    []
-                );
+            if (typeof Module !== "undefined" && Module._startGameFromWeb) {
+                Module._startGameFromWeb();
+                return true;
             }
+
+            console.error("startGameFromWeb is not available in the WebAssembly module");
+            return false;
         }
 
         /*
@@ -255,7 +248,8 @@ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
             startButton.addEventListener("pointerdown", function(event) {
                 event.preventDefault();
 
-                startGameFromWeb();
+                if (!startGameFromWeb())
+                    return;
 
                 // Zmieniamy START na strzałkę
                 startButton.textContent = "▲";
